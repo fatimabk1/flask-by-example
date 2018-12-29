@@ -1,9 +1,21 @@
+# import os to access environmental variables
 import os
 from flask import Flask, url_for, request
+from flask.ext.sqlalchemy import SQLAlchemy
 
 
 app = Flask(__name__)
-app.config.from_object(os.environ['APP_SETTINGS'])
+
+# import app_settings from .env file via os
+app.config.from_objects(os.environ['APP_SETTINGS'])
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = FALSE
+
+# initatite db connection
+db = SQLAlchemy(app)
+
+# importing class Result from models.py
+from models import Result
+
 
 @app.route('/')
 def index():
